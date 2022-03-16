@@ -13,14 +13,15 @@ function Conta(agencia=0, numero=0, digito=0, saldo=0, titular=null,
 
 
 Conta.prototype.extrato = function () {
-    console.log(this.saldo, this.historico);
-    return 'Extrato';
+    console.log(this.historico)
+    return this.saldo;
 } 
 
 Conta.prototype.transferir = function(valor, conta) {
-    this.sacar(valor);
-    conta.depositar(valor);
-    this.historico.push('Transferencia de ' + valor + ' efetuada.');
+    this.saldo -= valor;
+    conta.saldo += valor;
+    conta.historico.push(`Transferencia de ${valor} recebida de ${this.titular}.`)
+    this.historico.push(`Transferencia de ${valor} efetuada para ${conta.titular}.`);
     return 'ta transferido confia';
 }
 
@@ -35,5 +36,6 @@ Conta.prototype.sacar = function(valor) {
 }
 
 
-const carlos = new Conta ()
+const carlos = new Conta (112, 1, 0, 500, 'Carlos Eduardo');
+const joao = new Conta (112, 2, 5, 750, 'João Victor');
 
